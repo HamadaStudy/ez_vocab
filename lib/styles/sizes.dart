@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:ez_vocab/commons.dart';
 
 ///Different sizes / gaps to be used around the app. Alternatively you can use Gap Package
 const kEmptyWidget = SizedBox.shrink();
 const kGap0 = SizedBox.square(dimension: 0);
 const kGap5 = SizedBox.square(dimension: 5);
 const kGap8 = SizedBox.square(dimension: 8);
+const kGap15 = SizedBox.square(dimension: 15);
+const kGap30 = SizedBox.square(dimension: 30);
 
 ///Const of Paddings used around the app
 const kPadd2 = EdgeInsets.all(2);
@@ -27,6 +30,7 @@ const kPaddv15 = EdgeInsets.symmetric(vertical: 15);
 final kRadius0 = BorderRadius.circular(0);
 final kRadius10 = BorderRadius.circular(10);
 final kRadius15 = BorderRadius.circular(15);
+final kRadius20 = BorderRadius.circular(20);
 final kRadius30 = BorderRadius.circular(30);
 
 ///Const of Sizes used around the app

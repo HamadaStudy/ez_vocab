@@ -27,7 +27,7 @@ class AuthCustomTextField extends StatelessWidget {
         onChanged: onChanged,
         decoration: InputDecoration(
           labelText: labelText,
-          border: const OutlineInputBorder(),
+          border: OutlineInputBorder(borderRadius: kRadius20),
         ),
       ),
     );
