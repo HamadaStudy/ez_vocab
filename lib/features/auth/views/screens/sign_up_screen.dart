@@ -40,25 +40,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('新規登録'), centerTitle: true),
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.primary),
       body: Padding(
-        padding: kPadd15,
+        padding: kPadd25,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            kGap30,
+            Text('Welcome!', style: Theme.of(context).textTheme.headlineLarge),
+            kGap30,
+            Text('Sign Up', style: Theme.of(context).textTheme.displayMedium),
+            kGap60,
+            Text('Email', style: Theme.of(context).textTheme.headlineSmall),
             AuthCustomTextField(
               controller: _emailController,
-              labelText: 'メールアドレス',
+              hintText: 'Enter Email',
               keyboardType: TextInputType.emailAddress,
+              suffixIcon: Icon(Icons.email),
             ),
+            kGap15,
+            Text('Password', style: Theme.of(context).textTheme.headlineSmall),
             AuthCustomTextField(
               controller: _passwordController,
-              labelText: 'パスワード',
+              hintText: 'Enter Password',
               obscureText: true,
+              suffixIcon: Icon(Icons.password),
             ),
+            kGap15,
+            Text('Password', style: Theme.of(context).textTheme.headlineSmall),
             AuthCustomTextField(
               controller: _usernameController,
-              labelText: 'ユーザー名',
+              hintText: 'Enter User Name',
+              suffixIcon: Icon(Icons.person),
             ),
             kGap30,
             AuthCustomButton(text: 'サインアップ', onPressed: _handleSignUp),

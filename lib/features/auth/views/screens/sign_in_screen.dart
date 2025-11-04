@@ -44,13 +44,15 @@ class _SignInScreenState extends State<SignInScreen> {
           children: <Widget>[
             AuthCustomTextField(
               controller: _emailController,
-              labelText: 'メールアドレス',
+              hintText: 'Enter Email',
               keyboardType: TextInputType.emailAddress,
+              suffixIcon: Icon(Icons.email),
             ),
             AuthCustomTextField(
               controller: _passwordController,
-              labelText: 'パスワード',
-              obscureText: true, // パスワードは非表示にする
+              hintText: 'Enter Password',
+              obscureText: true,
+              suffixIcon: Icon(Icons.password),
             ),
             kGap30,
             AuthCustomButton(text: 'サインイン', onPressed: _handleSignIn),

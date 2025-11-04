@@ -8,6 +8,8 @@ const kGap5 = SizedBox.square(dimension: 5);
 const kGap8 = SizedBox.square(dimension: 8);
 const kGap15 = SizedBox.square(dimension: 15);
 const kGap30 = SizedBox.square(dimension: 30);
+const kGap60 = SizedBox.square(dimension: 60);
+const kGap90 = SizedBox.square(dimension: 90);
 
 ///Const of Paddings used around the app
 const kPadd2 = EdgeInsets.all(2);

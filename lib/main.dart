@@ -1,3 +1,4 @@
+import 'package:ez_vocab/commons.dart';
 import 'package:ez_vocab/features/auth/views/screens/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.deepPurple,
+          brightness: Brightness.light,
+        ),
+        textTheme: MyStyles.textTheme,
       ),
       home: SignUpScreen(),
     );
