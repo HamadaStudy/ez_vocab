@@ -1,17 +1,21 @@
+import 'dart:async';
+
 import 'package:ez_vocab/commons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SignInViewModel extends ConsumerStatefulWidget {
-  const SignInViewModel({super.key});
-
+class SignInViewModel extends AsyncNotifier<void> {
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _SignInViewModelState();
-}
+  Future<void> build() async {
+    AsyncValue.data(null);
+  }
 
-class _SignInViewModelState extends ConsumerState<SignInViewModel> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
+  Future<void> signIn() async {
+    state = AsyncValue.loading();
+    await Future.delayed(Duration(seconds: 2));
+    state = AsyncValue.data(null);
   }
 }
+
+final signInViewModelProvider = AsyncNotifierProvider.autoDispose(
+  SignInViewModel.new,
+);

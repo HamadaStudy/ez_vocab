@@ -2,20 +2,19 @@ import 'package:ez_vocab/commons.dart';
 
 ThemeData get lightTheme {
   return ThemeData(
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: Colors.cyan,
-      brightness: Brightness.light,
-    ),
+    colorScheme: myColorScheme,
     textTheme: MyStyles.textTheme,
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: Colors.grey.shade200,
+      fillColor: myColorScheme.surfaceDim,
       hintStyle: MyStyles.body2,
       border: OutlineInputBorder(
         borderRadius: kRadius30,
         borderSide: BorderSide.none,
       ),
     ),
+    scaffoldBackgroundColor: myColorScheme.surface,
+    appBarTheme: AppBarTheme(backgroundColor: myColorScheme.primary),
   );
 }
 

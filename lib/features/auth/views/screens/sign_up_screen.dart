@@ -30,8 +30,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.primary),
+      appBar: AppBar(),
       body: Padding(
         padding: kPadd25,
         child: Form(
@@ -39,7 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              kGap30,
+              kGap15,
 
               Text('Sign Up', style: Theme.of(context).textTheme.displayMedium),
               kGap30,
@@ -77,7 +76,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 suffixIcon: Icon(Icons.password),
                 validator: FormValidators.passwordValidator,
               ),
-              kGap30,
+              kGap15,
 
               // パスワード再入力フォーム
               Text(
