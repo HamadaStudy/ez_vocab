@@ -14,6 +14,7 @@ class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   void _handleSignIn() {
     final email = _emailController.text;
@@ -41,39 +42,56 @@ class _SignInScreenState extends State<SignInScreen> {
       appBar: AppBar(backgroundColor: Theme.of(context).colorScheme.primary),
       body: Padding(
         padding: kPadd25,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            kGap30,
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              kGap30,
 
-            Text('Sign In', style: Theme.of(context).textTheme.displayMedium),
-            kGap30,
+              Text('Sign In', style: Theme.of(context).textTheme.displayMedium),
+              kGap30,
 
-            Text('Email', style: Theme.of(context).textTheme.titleLarge),
-            kGap5,
-            AuthCustomTextField(
-              controller: _emailController,
-              hintText: 'Enter Email',
-              keyboardType: TextInputType.emailAddress,
-              suffixIcon: Icon(Icons.email),
-            ),
-            kGap15,
+              // メールアドレス入力フォーム
+              Text('Email', style: Theme.of(context).textTheme.titleLarge),
+              kGap5,
+              AuthCustomTextField(
+                controller: _emailController,
+                hintText: 'Enter Email',
+                keyboardType: TextInputType.emailAddress,
+                suffixIcon: Icon(Icons.email),
+                validator: FormValidators.emailValidator,
+              ),
+              kGap15,
 
-            Text('Password', style: Theme.of(context).textTheme.titleLarge),
-            kGap5,
-            AuthCustomTextField(
-              controller: _passwordController,
-              hintText: 'Enter Password',
-              obscureText: true,
-              suffixIcon: Icon(Icons.password),
-            ),
-            kGap45,
+              // パスワード入力フォーム
+              Text('Password', style: Theme.of(context).textTheme.titleLarge),
+              kGap5,
+              AuthCustomTextField(
+                controller: _passwordController,
+                hintText: 'Enter Password',
+                obscureText: true,
+                suffixIcon: Icon(Icons.password),
+                validator: FormValidators.required('パスワード'),
+              ),
+              kGap45,
 
-            AuthCustomButton(text: 'Sign In', onPressed: _handleSignIn),
-            kGap30,
+              // サインインボタン
+              AuthCustomButton(
+                text: 'Sign In',
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Processing Data')),
+                    );
+                  }
+                },
+              ),
+              kGap30,
 
-            _buildToggleText(context),
-          ],
+              _buildToggleText(context),
+            ],
+          ),
         ),
       ),
     );

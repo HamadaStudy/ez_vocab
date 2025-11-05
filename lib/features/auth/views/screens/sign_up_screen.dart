@@ -139,13 +139,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  String? passwordValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter some text';
-    }
-    return null;
-  }
-
   void _handleSignUp() {
     final email = _emailController.text;
     final password = _passwordController.text;
