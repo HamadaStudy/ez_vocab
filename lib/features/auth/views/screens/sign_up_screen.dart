@@ -11,9 +11,11 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordConfirmationController =
+      TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -42,15 +44,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Text('Sign Up', style: Theme.of(context).textTheme.displayMedium),
               kGap30,
 
+              // ユーザー名入力フォーム
               Text('Name', style: Theme.of(context).textTheme.titleLarge),
               kGap5,
               AuthCustomTextField(
                 controller: _usernameController,
                 hintText: 'Enter Name',
                 suffixIcon: Icon(Icons.person),
+                validator: FormValidators.required('ユーザー名'),
               ),
               kGap15,
 
+              // メールアドレス入力フォーム
               Text('Email', style: Theme.of(context).textTheme.titleLarge),
               kGap5,
               AuthCustomTextField(
@@ -58,9 +63,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 hintText: 'Enter Email',
                 keyboardType: TextInputType.emailAddress,
                 suffixIcon: Icon(Icons.email),
+                validator: FormValidators.emailValidator,
               ),
               kGap15,
 
+              // パスワード入力フォーム
               Text('Password', style: Theme.of(context).textTheme.titleLarge),
               kGap5,
               AuthCustomTextField(
@@ -68,24 +75,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 hintText: 'Enter Password',
                 obscureText: true,
                 suffixIcon: Icon(Icons.password),
-                validator: passwordValidator,
+                validator: FormValidators.passwordValidator,
               ),
               kGap30,
 
+              // パスワード再入力フォーム
               Text(
                 'Password (Confirm)',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               kGap5,
               AuthCustomTextField(
-                controller: _passwordController,
+                controller: _passwordConfirmationController,
                 hintText: 'Enter Password',
                 obscureText: true,
                 suffixIcon: Icon(Icons.password),
-                validator: passwordValidator,
+                validator: FormValidators.passwordConfirmationValidator(
+                  _passwordController.text,
+                ),
               ),
               kGap45,
 
+              // 登録ボタン
               AuthCustomButton(
                 text: 'Sign Up',
                 onPressed: () {

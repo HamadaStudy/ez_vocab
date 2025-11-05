@@ -1,5 +1,4 @@
 import 'package:ez_vocab/commons.dart';
-import 'package:ez_vocab/features/auth/views/screens/sign_up_screen.dart';
 import 'package:go_router/go_router.dart';
 import '../widgets/auth_custom_text_field.dart';
 import '../widgets/auth_custom_button.dart';

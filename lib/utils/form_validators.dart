@@ -47,11 +47,13 @@ class FormValidators {
     };
   }
 
-  static String? required(String? value, {String? fieldName}) {
-    if (value == null || value.isEmpty) {
-      return '${fieldName ?? 'この項目'}を入力してください';
-    }
-    return null;
+  static String? Function(String?) required(String fieldName) {
+    return (String? value) {
+      if (value == null || value.isEmpty) {
+        return '$fieldNameを入力してください';
+      }
+      return null;
+    };
   }
   // static String? Function(String?) minLength(int min, {String? fieldName}) {
   //   return (String? value) {
