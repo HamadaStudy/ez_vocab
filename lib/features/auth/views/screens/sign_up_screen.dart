@@ -1,8 +1,6 @@
-// lib/screens/sign_up_screen.dart
-
 import 'package:ez_vocab/commons.dart';
 import 'package:ez_vocab/features/auth/views/screens/sign_in_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../widgets/auth_custom_text_field.dart';
 import '../widgets/auth_custom_button.dart';
 
@@ -48,10 +46,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             kGap30,
+
             Text('Welcome!', style: Theme.of(context).textTheme.headlineLarge),
             kGap30,
+
             Text('Sign Up', style: Theme.of(context).textTheme.displayMedium),
             kGap60,
+
+            Text('Name', style: Theme.of(context).textTheme.headlineSmall),
+            AuthCustomTextField(
+              controller: _usernameController,
+              hintText: 'Enter Name',
+              suffixIcon: Icon(Icons.person),
+            ),
+            kGap15,
+
             Text('Email', style: Theme.of(context).textTheme.headlineSmall),
             AuthCustomTextField(
               controller: _emailController,
@@ -60,6 +69,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               suffixIcon: Icon(Icons.email),
             ),
             kGap15,
+
             Text('Password', style: Theme.of(context).textTheme.headlineSmall),
             AuthCustomTextField(
               controller: _passwordController,
@@ -67,16 +77,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
               obscureText: true,
               suffixIcon: Icon(Icons.password),
             ),
-            kGap15,
-            Text('Password', style: Theme.of(context).textTheme.headlineSmall),
-            AuthCustomTextField(
-              controller: _usernameController,
-              hintText: 'Enter User Name',
-              suffixIcon: Icon(Icons.person),
-            ),
             kGap30,
-            AuthCustomButton(text: 'サインアップ', onPressed: _handleSignUp),
+
+            AuthCustomButton(text: 'Sign Up', onPressed: _handleSignUp),
             kGap15,
+
             _buildToggleText(context),
           ],
         ),
@@ -86,27 +91,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
 }
 
 Widget _buildToggleText(BuildContext context) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: <Widget>[
-      const Text('アカウントをお持ちでないですか？'),
-      const SizedBox(width: 5),
-      GestureDetector(
-        onTap: () {
-          // サインアップ画面への遷移処理
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const SignInScreen()),
-          );
-        },
-        child: const Text(
-          '新規登録はこちら',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.blue, // リンクであることを示すために色を付ける
+  return SizedBox(
+    width: double.infinity,
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        const Text('すでにアカウントをお持ちですか？'),
+        kGap15,
+        GestureDetector(
+          onTap: () {
+            context.goNamed(AppRoute.signIn.name);
+          },
+          child: const Text(
+            'サインインはこちら',
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
           ),
         ),
-      ),
-    ],
+      ],
+    ),
   );
 }

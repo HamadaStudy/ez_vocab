@@ -10,3 +10,5 @@ export 'styles/colors.dart';
 export 'styles/sizes.dart';
 export 'styles/styles.dart';
 export 'styles/themes.dart';
+
+export 'route/app_router.dart';

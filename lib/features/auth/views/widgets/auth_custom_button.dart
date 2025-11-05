@@ -17,10 +17,11 @@ class AuthCustomButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
           padding: kPaddv15,
-          shape: RoundedRectangleBorder(borderRadius: kRadius20),
+          shape: RoundedRectangleBorder(borderRadius: kRadius30),
         ),
-        child: Text(text, style: MyStyles.body2),
+        child: Text(text, style: MyStyles.title),
       ),
     );
   }
