@@ -15,13 +15,7 @@ class MyApp extends ConsumerWidget {
     return MaterialApp.router(
       routerConfig: router,
       title: 'EZ-Vocab',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.cyan,
-          brightness: Brightness.light,
-        ),
-        textTheme: MyStyles.textTheme,
-      ),
+      theme: lightTheme,
     );
   }
 }

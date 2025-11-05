@@ -28,11 +28,8 @@ class AuthCustomTextField extends StatelessWidget {
       keyboardType: keyboardType,
       onChanged: onChanged,
       validator: validator,
-      decoration: InputDecoration(
-        hintText: hintText,
-        hintStyle: MyStyles.body2,
-        suffixIcon: suffixIcon,
-      ),
+      decoration: InputDecoration(hintText: hintText, suffixIcon: suffixIcon),
+      textAlignVertical: TextAlignVertical.center,
     );
   }
 }

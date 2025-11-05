@@ -47,13 +47,11 @@ class _SignInScreenState extends State<SignInScreen> {
           children: <Widget>[
             kGap30,
 
-            Text('Welcome!', style: Theme.of(context).textTheme.headlineLarge),
+            Text('Sign In', style: Theme.of(context).textTheme.displayMedium),
             kGap30,
 
-            Text('Sign In', style: Theme.of(context).textTheme.displayMedium),
-            kGap60,
-
-            Text('Email', style: Theme.of(context).textTheme.headlineSmall),
+            Text('Email', style: Theme.of(context).textTheme.titleLarge),
+            kGap5,
             AuthCustomTextField(
               controller: _emailController,
               hintText: 'Enter Email',
@@ -62,14 +60,15 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
             kGap15,
 
-            Text('Password', style: Theme.of(context).textTheme.headlineSmall),
+            Text('Password', style: Theme.of(context).textTheme.titleLarge),
+            kGap5,
             AuthCustomTextField(
               controller: _passwordController,
               hintText: 'Enter Password',
               obscureText: true,
               suffixIcon: Icon(Icons.password),
             ),
-            kGap30,
+            kGap45,
 
             AuthCustomButton(text: 'Sign In', onPressed: _handleSignIn),
             kGap30,

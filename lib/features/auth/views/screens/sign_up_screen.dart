@@ -1,5 +1,4 @@
 import 'package:ez_vocab/commons.dart';
-import 'package:ez_vocab/features/auth/views/screens/sign_in_screen.dart';
 import 'package:go_router/go_router.dart';
 import '../widgets/auth_custom_text_field.dart';
 import '../widgets/auth_custom_button.dart';
@@ -40,16 +39,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
             children: <Widget>[
               kGap30,
 
-              Text(
-                'Welcome!',
-                style: Theme.of(context).textTheme.headlineLarge,
-              ),
+              Text('Sign Up', style: Theme.of(context).textTheme.displayMedium),
               kGap30,
 
-              Text('Sign Up', style: Theme.of(context).textTheme.displayMedium),
-              kGap60,
-
-              Text('Name', style: Theme.of(context).textTheme.headlineSmall),
+              Text('Name', style: Theme.of(context).textTheme.titleLarge),
+              kGap5,
               AuthCustomTextField(
                 controller: _usernameController,
                 hintText: 'Enter Name',
@@ -57,7 +51,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               kGap15,
 
-              Text('Email', style: Theme.of(context).textTheme.headlineSmall),
+              Text('Email', style: Theme.of(context).textTheme.titleLarge),
+              kGap5,
               AuthCustomTextField(
                 controller: _emailController,
                 hintText: 'Enter Email',
@@ -66,10 +61,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               kGap15,
 
-              Text(
-                'Password',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
+              Text('Password', style: Theme.of(context).textTheme.titleLarge),
+              kGap5,
               AuthCustomTextField(
                 controller: _passwordController,
                 hintText: 'Enter Password',
@@ -78,6 +71,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 validator: passwordValidator,
               ),
               kGap30,
+
+              Text(
+                'Password (Confirm)',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              kGap5,
+              AuthCustomTextField(
+                controller: _passwordController,
+                hintText: 'Enter Password',
+                obscureText: true,
+                suffixIcon: Icon(Icons.password),
+                validator: passwordValidator,
+              ),
+              kGap45,
 
               AuthCustomButton(
                 text: 'Sign Up',
@@ -89,7 +96,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   }
                 },
               ),
-              kGap15,
+              kGap30,
 
               _buildToggleText(context),
             ],
