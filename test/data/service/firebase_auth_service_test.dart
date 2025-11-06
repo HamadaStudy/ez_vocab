@@ -6,12 +6,6 @@ import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 import 'firebase_auth_service_test.mocks.dart';
 
-// final mockUser = MockUser(
-//   uid: 'some_uid',
-//   email: 'test@gmail.com',
-//   displayName: 'Test User',
-// );
-
 @GenerateMocks([UserCredential, FirebaseAuth])
 void main() {
   late MockFirebaseAuth mockFirebaseAuth;
@@ -22,6 +16,9 @@ void main() {
     service = FirebaseAuthService(firebaseAuthInstance: mockFirebaseAuth);
   });
   group('FirebaseAuthService - signIn', () {
+    // ====================================================
+    // # test1
+    // ====================================================
     test('サインインが成功した場合、Result.okが返されること', () async {
       final mockUserCredential = MockUserCredential();
 
@@ -37,7 +34,9 @@ void main() {
       expect(result, isA<Ok<UserCredential>>());
       expect((result as Ok<UserCredential>).value, mockUserCredential);
     });
-
+    // ====================================================
+    // # test2
+    // ====================================================
     test('無効な認証情報でサインインが失敗した場合、Result.errorが返されること', () async {
       final exception = FirebaseAuthException(
         code: 'wrong-password',
@@ -60,30 +59,4 @@ void main() {
       );
     });
   });
-
-  // late MockFirebaseAuth mockFirebaseAuth;
-  // late FirebaseAuthService service;
-
-  // setUp(() {
-  //   mockFirebaseAuth = MockFirebaseAuth(mockUser: mockUser);
-  //   service = FirebaseAuthService(firebaseAuthInstance: mockFirebaseAuth);
-  // });
-  // group('FirebaseAuthService - signIn', () {
-  //   test('サインインが成功した場合、Result.okが返されること', () async {
-  //     final result = await service.signIn('test@gmail.com', 'password123');
-
-  //     expect(result, isA<Ok<UserCredential>>());
-  //     expect((result as Ok<UserCredential>).value.user?.email, mockUser.email);
-  //   });
-
-  //   test('無効な認証情報でサインインが失敗した場合、Result.errorが返されること', () async {
-  //     final result = await service.signIn('wrong@gamil.com', 'badpassword');
-
-  //     expect(result, isA<Error<UserCredential>>());
-  //     expect(
-  //       (result as Error<UserCredential>).error,
-  //       isA<FirebaseAuthException>(),
-  //     );
-  //   });
-  // });
 }

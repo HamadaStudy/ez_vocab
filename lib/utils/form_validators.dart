@@ -1,3 +1,5 @@
+import 'package:ez_vocab/commons.dart';
+
 class FormValidators {
   FormValidators._();
 
@@ -32,14 +34,17 @@ class FormValidators {
   }
 
   static String? Function(String?) passwordConfirmationValidator(
-    String originalPassword,
+    TextEditingController originalPasswordController,
   ) {
+    final originalPassword = originalPasswordController.text;
     return (String? value) {
       if (value == null || value.isEmpty) {
         return 'パスワード（確認）を入力してください';
       }
 
       if (value != originalPassword) {
+        print('original: $originalPassword');
+        print('input: $value');
         return 'パスワードが一致しません';
       }
 

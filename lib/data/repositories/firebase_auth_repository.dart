@@ -18,4 +18,15 @@ class FirebaseAuthRepository implements AuthRepository {
         return result;
     }
   }
+
+  @override
+  Future<Result<void>> signUp(String email, String password) async {
+    final result = await firebaseAuthService.signUp(email, password);
+    switch (result) {
+      case Ok<UserCredential>():
+        return Result.ok(null);
+      case Error<UserCredential>():
+        return result;
+    }
+  }
 }

@@ -1,16 +1,18 @@
 import 'package:ez_vocab/commons.dart';
+import 'package:ez_vocab/ui/auth/view_models/sign_up_view_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../widgets/auth_custom_text_field.dart';
 import '../widgets/auth_custom_button.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  ConsumerState<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -24,117 +26,132 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     _usernameController.dispose();
+    _passwordConfirmationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(signUpViewModelProvider);
     return Scaffold(
       appBar: AppBar(),
-      body: Padding(
-        padding: kPadd25,
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              kGap15,
+      body:
+          state.isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : Padding(
+                padding: kPadd25,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      kGap15,
 
-              Text('Sign Up', style: Theme.of(context).textTheme.displayMedium),
-              kGap30,
+                      Text(
+                        'Sign Up',
+                        style: Theme.of(context).textTheme.displayMedium,
+                      ),
+                      kGap30,
 
-              // ユーザー名入力フォーム
-              Text('Name', style: Theme.of(context).textTheme.titleLarge),
-              kGap5,
-              AuthCustomTextField(
-                controller: _usernameController,
-                hintText: 'Enter Name',
-                suffixIcon: Icon(Icons.person),
-                validator: FormValidators.required('ユーザー名'),
-              ),
-              kGap15,
+                      // ユーザー名入力フォーム
+                      Text(
+                        'Name',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      kGap5,
+                      AuthCustomTextField(
+                        controller: _usernameController,
+                        hintText: 'Enter Name',
+                        suffixIcon: Icon(Icons.person),
+                        validator: FormValidators.required('ユーザー名'),
+                      ),
+                      kGap15,
 
-              // メールアドレス入力フォーム
-              Text('Email', style: Theme.of(context).textTheme.titleLarge),
-              kGap5,
-              AuthCustomTextField(
-                controller: _emailController,
-                hintText: 'Enter Email',
-                keyboardType: TextInputType.emailAddress,
-                suffixIcon: Icon(Icons.email),
-                validator: FormValidators.emailValidator,
-              ),
-              kGap15,
+                      // メールアドレス入力フォーム
+                      Text(
+                        'Email',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      kGap5,
+                      AuthCustomTextField(
+                        controller: _emailController,
+                        hintText: 'Enter Email',
+                        keyboardType: TextInputType.emailAddress,
+                        suffixIcon: Icon(Icons.email),
+                        validator: FormValidators.emailValidator,
+                      ),
+                      kGap15,
 
-              // パスワード入力フォーム
-              Text('Password', style: Theme.of(context).textTheme.titleLarge),
-              kGap5,
-              AuthCustomTextField(
-                controller: _passwordController,
-                hintText: 'Enter Password',
-                obscureText: true,
-                suffixIcon: Icon(Icons.password),
-                validator: FormValidators.passwordValidator,
-              ),
-              kGap15,
+                      // パスワード入力フォーム
+                      Text(
+                        'Password',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      kGap5,
+                      AuthCustomTextField(
+                        controller: _passwordController,
+                        hintText: 'Enter Password',
+                        obscureText: true,
+                        suffixIcon: Icon(Icons.password),
+                        validator: FormValidators.passwordValidator,
+                      ),
+                      kGap15,
 
-              // パスワード再入力フォーム
-              Text(
-                'Password (Confirm)',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              kGap5,
-              AuthCustomTextField(
-                controller: _passwordConfirmationController,
-                hintText: 'Enter Password',
-                obscureText: true,
-                suffixIcon: Icon(Icons.password),
-                validator: FormValidators.passwordConfirmationValidator(
-                  _passwordController.text,
+                      // パスワード再入力フォーム
+                      Text(
+                        'Password (Confirm)',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      kGap5,
+                      AuthCustomTextField(
+                        controller: _passwordConfirmationController,
+                        hintText: 'Enter Password',
+                        obscureText: true,
+                        suffixIcon: Icon(Icons.password),
+                        validator: FormValidators.passwordConfirmationValidator(
+                          _passwordController,
+                        ),
+                      ),
+                      kGap45,
+
+                      // 登録ボタン
+                      AuthCustomButton(
+                        text: 'Sign Up',
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _handleSignIn();
+                          }
+                        },
+                      ),
+                      kGap30,
+
+                      _buildToggleText(context),
+                    ],
+                  ),
                 ),
               ),
-              kGap45,
-
-              // 登録ボタン
-              AuthCustomButton(
-                text: 'Sign Up',
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing Data')),
-                    );
-                  }
-                },
-              ),
-              kGap30,
-
-              _buildToggleText(context),
-            ],
-          ),
-        ),
-      ),
     );
   }
 
-  // // ====helperメソッド====
-  // Future<void> _handleSignIn() async {
-  //   final viewModel = ref.read(signUpViewModelProvider.notifier);
+  // ==================== helperメソッド ====================
+  Future<void> _handleSignIn() async {
+    final viewModel = ref.read(signUpViewModelProvider.notifier);
 
-  //   final success = await viewModel.signIn(
-  //     _emailController.text,
-  //     _passwordController.text,
-  //   );
+    final success = await viewModel.signUp(
+      _emailController.text,
+      _passwordController.text,
+    );
 
-  //   if (!mounted) return;
+    if (!mounted) return;
 
-  //   if (success) {
-  //     context.goNamed(AppRoute.home.name);
-  //   } else {
-  //     ScaffoldMessenger.of(
-  //       context,
-  //     ).showSnackBar(const SnackBar(content: Text('ログインに失敗しました。')));
-  //   }
-  // }
+    if (success) {
+      context.goNamed(AppRoute.home.name);
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('登録に失敗しました。')));
+    }
+  }
 
   Widget _buildToggleText(BuildContext context) {
     return SizedBox(

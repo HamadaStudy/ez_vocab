@@ -14,7 +14,7 @@ class SignUpViewModel extends AsyncNotifier<void> {
     final authRepository = ref.watch(authRepositoryProvider);
     state = const AsyncValue.loading();
     try {
-      final result = await authRepository.signIn(email, password);
+      final result = await authRepository.signUp(email, password);
       switch (result) {
         case Ok<void>():
           state = AsyncValue.data(null);
