@@ -13,3 +13,4 @@ export 'styles/themes.dart';
 
 export 'route/app_router.dart';
 export 'utils/form_validators.dart';
+export 'utils/reslut.dart';

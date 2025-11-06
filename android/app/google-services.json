@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1088453123089",
+    "project_id": "ez-vocab-c96be",
+    "storage_bucket": "ez-vocab-c96be.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1088453123089:android:910ef04b03b98cf552e5b0",
+        "android_client_info": {
+          "package_name": "com.example.ez_vocab"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjHlYDafpG22sKJFOpnf29ju1G-KR4PFA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
