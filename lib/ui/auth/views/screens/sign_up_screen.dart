@@ -116,6 +116,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
+  // ====helperメソッド====
+  Future<void> _handleSignIn() async {
+    final viewModel = ref.read(signUpViewModelProvider.notifier);
+
+    final success = await viewModel.signIn(
+      _emailController.text,
+      _passwordController.text,
+    );
+
+    if (!mounted) return;
+
+    if (success) {
+      context.goNamed(AppRoute.home.name);
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('ログインに失敗しました。')));
+    }
+  }
+
   Widget _buildToggleText(BuildContext context) {
     return SizedBox(
       width: double.infinity,
@@ -136,16 +156,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ],
       ),
     );
-  }
-
-  void _handleSignUp() {
-    final email = _emailController.text;
-    final password = _passwordController.text;
-    final username = _usernameController.text;
-
-    // ここにサインアップ処理（FirebaseなどのAPI呼び出し）を記述
-    print('サインアップ試行:');
-    print('Email: $email, Password: $password, Username: $username');
-    // 成功/失敗に応じてナビゲーションやメッセージ表示を行う
   }
 }

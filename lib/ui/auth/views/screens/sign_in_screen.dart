@@ -30,61 +30,72 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
 
     return Scaffold(
       appBar: AppBar(),
-      body: Padding(
-        padding: kPadd25,
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              kGap15,
+      body:
+          state.isLoading
+              ? Center(child: const CircularProgressIndicator())
+              : Padding(
+                padding: kPadd25,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      kGap15,
 
-              // タイトル
-              Text('Sign In', style: Theme.of(context).textTheme.displayMedium),
-              kGap30,
+                      // タイトル
+                      Text(
+                        'Sign In',
+                        style: Theme.of(context).textTheme.displayMedium,
+                      ),
+                      kGap30,
 
-              // メールアドレス入力フォーム
-              Text('Email', style: Theme.of(context).textTheme.titleLarge),
-              kGap5,
-              AuthCustomTextField(
-                controller: _emailController,
-                hintText: 'Enter Email',
-                keyboardType: TextInputType.emailAddress,
-                suffixIcon: Icon(Icons.email),
-                validator: FormValidators.emailValidator,
-              ),
-              kGap15,
+                      // メールアドレス入力フォーム
+                      Text(
+                        'Email',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      kGap5,
+                      AuthCustomTextField(
+                        controller: _emailController,
+                        hintText: 'Enter Email',
+                        keyboardType: TextInputType.emailAddress,
+                        suffixIcon: Icon(Icons.email),
+                        validator: FormValidators.emailValidator,
+                      ),
+                      kGap15,
 
-              // パスワード入力フォーム
-              Text('Password', style: Theme.of(context).textTheme.titleLarge),
-              kGap5,
-              AuthCustomTextField(
-                controller: _passwordController,
-                hintText: 'Enter Password',
-                obscureText: true,
-                suffixIcon: Icon(Icons.password),
-                validator: FormValidators.required('パスワード'),
-              ),
-              kGap45,
+                      // パスワード入力フォーム
+                      Text(
+                        'Password',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      kGap5,
+                      AuthCustomTextField(
+                        controller: _passwordController,
+                        hintText: 'Enter Password',
+                        obscureText: true,
+                        suffixIcon: Icon(Icons.password),
+                        validator: FormValidators.required('パスワード'),
+                      ),
+                      kGap45,
 
-              // サインインボタン
-              state.isLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : AuthCustomButton(
-                    text: 'Sign In',
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _handleSignIn();
-                      }
-                    },
+                      // サインインボタン
+                      AuthCustomButton(
+                        text: 'Sign In',
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _handleSignIn();
+                          }
+                        },
+                      ),
+
+                      kGap30,
+
+                      _buildToggleText(context),
+                    ],
                   ),
-              kGap30,
-
-              _buildToggleText(context),
-            ],
-          ),
-        ),
-      ),
+                ),
+              ),
     );
   }
 
