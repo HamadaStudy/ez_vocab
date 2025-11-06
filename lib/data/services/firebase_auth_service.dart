@@ -8,6 +8,18 @@ class FirebaseAuthService {
 
   Future<Result<UserCredential>> signIn(String email, String password) async {
     try {
+      final response = await firebaseAuthInstance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return Result.ok(response);
+    } on Exception catch (e, st) {
+      return Result.error(e, st);
+    }
+  }
+
+  Future<Result<UserCredential>> signUp(String email, String password) async {
+    try {
       final response = await firebaseAuthInstance
           .createUserWithEmailAndPassword(email: email, password: password);
       return Result.ok(response);

@@ -116,25 +116,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  // ====helperメソッド====
-  Future<void> _handleSignIn() async {
-    final viewModel = ref.read(signUpViewModelProvider.notifier);
+  // // ====helperメソッド====
+  // Future<void> _handleSignIn() async {
+  //   final viewModel = ref.read(signUpViewModelProvider.notifier);
 
-    final success = await viewModel.signIn(
-      _emailController.text,
-      _passwordController.text,
-    );
+  //   final success = await viewModel.signIn(
+  //     _emailController.text,
+  //     _passwordController.text,
+  //   );
 
-    if (!mounted) return;
+  //   if (!mounted) return;
 
-    if (success) {
-      context.goNamed(AppRoute.home.name);
-    } else {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('ログインに失敗しました。')));
-    }
-  }
+  //   if (success) {
+  //     context.goNamed(AppRoute.home.name);
+  //   } else {
+  //     ScaffoldMessenger.of(
+  //       context,
+  //     ).showSnackBar(const SnackBar(content: Text('ログインに失敗しました。')));
+  //   }
+  // }
 
   Widget _buildToggleText(BuildContext context) {
     return SizedBox(
