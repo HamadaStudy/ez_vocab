@@ -13,7 +13,7 @@ void main() {
 
   setUp(() {
     mockFirebaseAuth = MockFirebaseAuth();
-    service = FirebaseAuthService(firebaseAuthInstance: mockFirebaseAuth);
+    service = FirebaseAuthService(mockFirebaseAuth);
   });
   group('FirebaseAuthService - signIn', () {
     // ====================================================

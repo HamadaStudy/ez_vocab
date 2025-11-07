@@ -1,38 +1,43 @@
 import 'package:ez_vocab/commons.dart';
-import 'package:ez_vocab/ui/auth/view_models/sign_in_view_model.dart';
+import 'package:ez_vocab/presentation/auth/view_models/sign_up_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../widgets/auth_custom_text_field.dart';
 import '../widgets/auth_custom_button.dart';
 
-class SignInScreen extends ConsumerStatefulWidget {
-  const SignInScreen({super.key});
+class SignUpScreen extends ConsumerStatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  ConsumerState<SignInScreen> createState() => _SignInScreenState();
+  ConsumerState<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignInScreenState extends ConsumerState<SignInScreen> {
+class _SignUpScreenState extends ConsumerState<SignUpScreen> {
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordConfirmationController =
+      TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _usernameController.dispose();
+    _passwordConfirmationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(signInViewModelProvider);
-
+    final signUpState = ref.watch(signUpViewModelProvider);
     return Scaffold(
       appBar: AppBar(),
       body:
-          state.isLoading
-              ? Center(child: const CircularProgressIndicator())
+          signUpState.isLoading
+              ? const Center(child: CircularProgressIndicator())
               : Padding(
                 padding: kPadd25,
                 child: Form(
@@ -42,12 +47,25 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                     children: <Widget>[
                       kGap15,
 
-                      // タイトル
                       Text(
-                        'Sign In',
+                        'Sign Up',
                         style: Theme.of(context).textTheme.displayMedium,
                       ),
                       kGap30,
+
+                      // ユーザー名入力フォーム
+                      Text(
+                        'Name',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      kGap5,
+                      AuthCustomTextField(
+                        controller: _usernameController,
+                        hintText: 'Enter Name',
+                        suffixIcon: Icon(Icons.person),
+                        validator: FormValidators.required('ユーザー名'),
+                      ),
+                      kGap15,
 
                       // メールアドレス入力フォーム
                       Text(
@@ -75,20 +93,36 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                         hintText: 'Enter Password',
                         obscureText: true,
                         suffixIcon: Icon(Icons.password),
-                        validator: FormValidators.required('パスワード'),
+                        validator: FormValidators.passwordValidator,
+                      ),
+                      kGap15,
+
+                      // パスワード再入力フォーム
+                      Text(
+                        'Password (Confirm)',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      kGap5,
+                      AuthCustomTextField(
+                        controller: _passwordConfirmationController,
+                        hintText: 'Enter Password',
+                        obscureText: true,
+                        suffixIcon: Icon(Icons.password),
+                        validator: FormValidators.passwordConfirmationValidator(
+                          _passwordController,
+                        ),
                       ),
                       kGap45,
 
-                      // サインインボタン
+                      // 登録ボタン
                       AuthCustomButton(
-                        text: 'Sign In',
+                        text: 'Sign Up',
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             _handleSignIn();
                           }
                         },
                       ),
-
                       kGap30,
 
                       _buildToggleText(context),
@@ -99,11 +133,11 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     );
   }
 
-  // ====helperメソッド====
+  // ==================== helperメソッド ====================
   Future<void> _handleSignIn() async {
-    final viewModel = ref.read(signInViewModelProvider.notifier);
+    final signUpViewModel = ref.read(signUpViewModelProvider.notifier);
 
-    final success = await viewModel.signIn(
+    final success = await signUpViewModel.signUp(
       _emailController.text,
       _passwordController.text,
     );
@@ -115,7 +149,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     } else {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('ログインに失敗しました。')));
+      ).showSnackBar(const SnackBar(content: Text('登録に失敗しました。')));
     }
   }
 
@@ -125,14 +159,14 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const Text('アカウントをお持ちでないですか？'),
+          const Text('すでにアカウントをお持ちですか？'),
           kGap15,
           GestureDetector(
             onTap: () {
-              context.goNamed(AppRoute.signUp.name);
+              context.goNamed(AppRoute.signIn.name);
             },
             child: const Text(
-              'サインアップはこちら',
+              'サインインはこちら',
               style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
             ),
           ),

@@ -1,7 +1,7 @@
-import 'package:ez_vocab/ui/auth/views/screens/sign_in_screen.dart';
-import 'package:ez_vocab/ui/auth/views/screens/sign_up_screen.dart';
-import 'package:ez_vocab/ui/home/views/home_screen.dart';
-import 'package:ez_vocab/ui/splash/views/splash_screen.dart';
+import 'package:ez_vocab/presentation/auth/views/screens/sign_in_screen.dart';
+import 'package:ez_vocab/presentation/auth/views/screens/sign_up_screen.dart';
+import 'package:ez_vocab/presentation/home/views/home_screen.dart';
+import 'package:ez_vocab/presentation/splash/views/splash_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';

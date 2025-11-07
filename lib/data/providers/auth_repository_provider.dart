@@ -9,5 +9,5 @@ final authRepositoryProvider = Provider<AuthRepository>(
 
 final firebaseAuthRepositoryProvider = Provider<FirebaseAuthRepository>((ref) {
   final firebaseAuthService = ref.watch(firebaseAuthServiceProvider);
-  return FirebaseAuthRepository(firebaseAuthService: firebaseAuthService);
+  return FirebaseAuthRepository(firebaseAuthService);
 });
