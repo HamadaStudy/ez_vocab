@@ -108,21 +108,18 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
       _passwordController.text,
     );
 
-    if (!mounted) return;
+    final String snackBarMessage;
 
+    if (!mounted) return;
     switch (result) {
       case Ok<void>():
+        snackBarMessage = 'サインインに成功しました。';
       case Error<void>():
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(result.toString())));
+        snackBarMessage = result.error.message;
     }
-
-    // if (!success) {
-    //   ScaffoldMessenger.of(
-    //     context,
-    //   ).showSnackBar(const SnackBar(content: Text('ログインに失敗しました。')));
-    // }
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(snackBarMessage)));
   }
 
   Widget _buildToggleText(BuildContext context) {

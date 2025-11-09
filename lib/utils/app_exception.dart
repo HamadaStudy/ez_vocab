@@ -24,6 +24,8 @@ class AppFirebaseAuthException extends AppException {
 
   static String _mapCodeToMessage(String errorCode) {
     return switch (errorCode) {
+      'email-already-in-use' => 'このメールアドレスは既に他のアカウントで使用されています。',
+      'weak-password' => 'パスワードが弱すぎます。より強力なものを使用してください。',
       'invalid-email' => '不正な形式のメールアドレスです。',
       'user-disabled' => 'このユーザーアカウントは停止されています。',
       'user-not-found' => '対応するユーザーが見つかりません。',

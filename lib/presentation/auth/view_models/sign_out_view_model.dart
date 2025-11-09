@@ -10,17 +10,17 @@ class SignOutViewModel extends AsyncNotifier<void> {
     AsyncValue.data(null);
   }
 
-  Future<bool> signOut() async {
+  Future<Result<void>> signOut() async {
     final authRepository = ref.watch(authRepositoryProvider);
     state = const AsyncValue.loading();
     final result = await authRepository.signOut();
     switch (result) {
       case Ok<void>():
         state = AsyncValue.data(null);
-        return true;
+        return result;
       case Error<void>():
         state = AsyncValue.error(result.error, result.stackTrace);
-        return false;
+        return result;
     }
   }
 }

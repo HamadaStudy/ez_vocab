@@ -20,14 +20,18 @@ class _SignOutButtonState extends ConsumerState<SignOutButton> {
   Future<void> _handleSignOut() async {
     final signOutViewModel = ref.read(signOutViewModelProvider.notifier);
 
-    final success = await signOutViewModel.signOut();
+    final result = await signOutViewModel.signOut();
+    final String snackBarMessage;
 
     if (!mounted) return;
-
-    if (!success) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('サインアウトに失敗しました。')));
+    switch (result) {
+      case Ok<void>():
+        snackBarMessage = 'サインアウトに成功しました。';
+      case Error<void>():
+        snackBarMessage = result.error.message;
     }
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(snackBarMessage)));
   }
 }

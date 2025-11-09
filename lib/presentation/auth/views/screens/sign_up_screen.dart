@@ -152,14 +152,18 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
       _passwordController.text,
     );
 
+    final String snackBarMessage;
+
     if (!mounted) return;
     switch (result) {
       case Ok<void>():
+        snackBarMessage = 'サインアップに成功しました。';
       case Error<void>():
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text((result as Error<void>).error.message)),
-        );
+        snackBarMessage = result.error.message;
     }
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(snackBarMessage)));
   }
 
   Widget _buildToggleText(BuildContext context) {
