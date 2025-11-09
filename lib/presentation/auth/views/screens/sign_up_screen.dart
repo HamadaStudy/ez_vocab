@@ -22,6 +22,16 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    super.initState();
+    _passwordController.addListener(_revalidateConfirmPassword);
+  }
+
+  void _revalidateConfirmPassword() {
+    setState(() {});
+  }
+
+  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
@@ -109,7 +119,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                         obscureText: true,
                         suffixIcon: Icon(Icons.password),
                         validator: FormValidators.passwordConfirmationValidator(
-                          _passwordController,
+                          _passwordController.text,
                         ),
                       ),
                       kGap45,

@@ -34,9 +34,9 @@ class FormValidators {
   }
 
   static String? Function(String?) passwordConfirmationValidator(
-    TextEditingController originalPasswordController,
+    String? originalPassword,
   ) {
-    final originalPassword = originalPasswordController.text;
+    print('${originalPassword}------------------------');
     return (String? value) {
       if (value == null || value.isEmpty) {
         return 'パスワード（確認）を入力してください';
