@@ -43,8 +43,6 @@ class FormValidators {
       }
 
       if (value != originalPassword) {
-        print('original: $originalPassword');
-        print('input: $value');
         return 'パスワードが一致しません';
       }
 

@@ -144,9 +144,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
     if (!mounted) return;
 
-    if (success) {
-      context.goNamed(AppRoute.home.name);
-    } else {
+    if (!success) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(const SnackBar(content: Text('登録に失敗しました。')));

@@ -110,9 +110,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
 
     if (!mounted) return;
 
-    if (success) {
-      context.goNamed(AppRoute.home.name);
-    } else {
+    if (!success) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(const SnackBar(content: Text('ログインに失敗しました。')));

@@ -1,5 +1,6 @@
 import 'package:ez_vocab/data/repositories/auth_repository.dart';
 import 'package:ez_vocab/data/services/firebase_auth_service.dart';
+import 'package:ez_vocab/domain/models/auth/app_user.dart';
 import 'package:ez_vocab/utils/reslut.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -19,15 +20,15 @@ class FirebaseAuthRepository implements AuthRepository {
   // }
 
   @override
-  Stream<Result<bool>> authStateChanges() {
+  Stream<AppUser?> get currentAppUser {
     final result = _firebaseAuthService.authStateChanges();
+
     return result.map((result) {
-      switch (result) {
-        case Ok<User?>():
-          return Result.ok(result.value != null);
-        case Error<User?>():
-          return Result.error(result.error, result.stackTrace);
-      }
+      return switch (result) {
+        Ok<User?>(value: final User user) => AppUser.fromFirebaseUser(user),
+        Ok<User?>(value: null) => null,
+        Error<User?>() => null,
+      };
     });
   }
 
