@@ -103,18 +103,26 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
   Future<void> _handleSignIn() async {
     final signInViewModel = ref.read(signInViewModelProvider.notifier);
 
-    final success = await signInViewModel.signIn(
+    final result = await signInViewModel.signIn(
       _emailController.text,
       _passwordController.text,
     );
 
     if (!mounted) return;
 
-    if (!success) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('ログインに失敗しました。')));
+    switch (result) {
+      case Ok<void>():
+      case Error<void>():
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(result.toString())));
     }
+
+    // if (!success) {
+    //   ScaffoldMessenger.of(
+    //     context,
+    //   ).showSnackBar(const SnackBar(content: Text('ログインに失敗しました。')));
+    // }
   }
 
   Widget _buildToggleText(BuildContext context) {

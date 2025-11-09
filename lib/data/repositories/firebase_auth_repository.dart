@@ -9,16 +9,6 @@ class FirebaseAuthRepository implements AuthRepository {
 
   final FirebaseAuthService _firebaseAuthService;
 
-  // @override
-  // Stream<Result<bool>> authStateChanges() {
-  //   return _firebaseAuthService.authStateChanges().map((result) {
-  //     return switch (result) {
-  //       Ok(value: final user) => Result.ok(user != null),
-  //       Error(error: final e, stackTrace: final st) => Result.error(e, st),
-  //     };
-  //   });
-  // }
-
   @override
   Stream<AppUser?> get currentAppUser {
     final result = _firebaseAuthService.authStateChanges();

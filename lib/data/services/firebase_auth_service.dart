@@ -1,28 +1,22 @@
 import 'package:ez_vocab/commons.dart';
+import 'package:ez_vocab/utils/app_exception.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseAuthService {
   final FirebaseAuth _firebaseAuthInstance;
-
   FirebaseAuthService(this._firebaseAuthInstance);
+
   Stream<Result<User?>> authStateChanges() {
     try {
-      return _firebaseAuthInstance
-          .authStateChanges()
-          .map((user) => Result.ok(user))
-          .handleError((error, stackTrace) {
-            if (error is Exception) {
-              return Result.error(error, stackTrace);
-            }
-            // Exceptionでない場合は汎用的なエラーに変換
-            return Result.error(
-              Exception('Unexpected error: $error'),
-              stackTrace,
-            );
-          });
-    } on Exception catch (e, st) {
-      // Stream生成自体が失敗した場合
-      return Stream.value(Result.error(e, st));
+      return _firebaseAuthInstance.authStateChanges().map(
+        (user) => Result.ok(user),
+      );
+    } on FirebaseAuthException catch (e, st) {
+      final exception = AppException.firebaseAuthException(e.code, st);
+      return Stream.value(Result.error(exception, st));
+    } catch (e, st) {
+      final exception = AppException.unknownException(st);
+      return Stream.value(Result.error(exception, st));
     }
   }
 
@@ -33,8 +27,12 @@ class FirebaseAuthService {
         password: password,
       );
       return Result.ok(response);
-    } on Exception catch (e, st) {
-      return Result.error(e, st);
+    } on FirebaseAuthException catch (e, st) {
+      final exception = AppException.firebaseAuthException(e.code, st);
+      return Result.error(exception, st);
+    } catch (e, st) {
+      final exception = AppException.unknownException(st);
+      return Result.error(exception, st);
     }
   }
 
@@ -43,8 +41,12 @@ class FirebaseAuthService {
       final response = await _firebaseAuthInstance
           .createUserWithEmailAndPassword(email: email, password: password);
       return Result.ok(response);
-    } on Exception catch (e, st) {
-      return Result.error(e, st);
+    } on FirebaseAuthException catch (e, st) {
+      final exception = AppException.firebaseAuthException(e.code, st);
+      return Result.error(exception, st);
+    } catch (e, st) {
+      final exception = AppException.unknownException(st);
+      return Result.error(exception, st);
     }
   }
 
@@ -52,8 +54,12 @@ class FirebaseAuthService {
     try {
       await _firebaseAuthInstance.signOut();
       return Result.ok(null);
-    } on Exception catch (e, st) {
-      return Result.error(e, st);
+    } on FirebaseAuthException catch (e, st) {
+      final exception = AppException.firebaseAuthException(e.code, st);
+      return Result.error(exception, st);
+    } catch (e, st) {
+      final exception = AppException.unknownException(st);
+      return Result.error(exception, st);
     }
   }
 }

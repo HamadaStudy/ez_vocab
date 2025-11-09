@@ -1,12 +1,15 @@
+import 'package:ez_vocab/utils/app_exception.dart';
+
 sealed class Result<T> {
-  const Result();
+  const Result._();
 
   const factory Result.ok(T value) = Ok._;
-  const factory Result.error(Exception error, StackTrace stackTrace) = Error._;
+  const factory Result.error(AppException error, StackTrace stackTrace) =
+      Error._;
 }
 
-final class Ok<T> extends Result<T> {
-  const Ok._(this.value);
+class Ok<T> extends Result<T> {
+  const Ok._(this.value) : super._();
 
   final T value;
 
@@ -14,10 +17,10 @@ final class Ok<T> extends Result<T> {
   String toString() => 'Result<$T>.ok($value)';
 }
 
-final class Error<T> extends Result<T> {
-  const Error._(this.error, this.stackTrace);
+class Error<T> extends Result<T> {
+  const Error._(this.error, this.stackTrace) : super._();
 
-  final Exception error;
+  final AppException error;
   final StackTrace stackTrace;
 
   @override

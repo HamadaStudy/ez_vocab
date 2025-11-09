@@ -147,17 +147,18 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   Future<void> _handleSignIn() async {
     final signUpViewModel = ref.read(signUpViewModelProvider.notifier);
 
-    final success = await signUpViewModel.signUp(
+    final result = await signUpViewModel.signUp(
       _emailController.text,
       _passwordController.text,
     );
 
     if (!mounted) return;
-
-    if (!success) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('登録に失敗しました。')));
+    switch (result) {
+      case Ok<void>():
+      case Error<void>():
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text((result as Error<void>).error.message)),
+        );
     }
   }
 
