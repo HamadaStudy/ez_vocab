@@ -28,3 +28,8 @@ class MyColors {
   static const yellowDark = Color(0xffF7B02B);
   static const blueIce = Color(0xff85d4e0);
 }
+
+final ColorScheme myColorScheme = ColorScheme.fromSeed(
+  seedColor: Colors.cyan,
+  brightness: Brightness.light,
+);
